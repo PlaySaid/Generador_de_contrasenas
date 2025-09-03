@@ -13,11 +13,11 @@ public class Main {
         char[] simbolos = "!@#$%^&*()_+-=[]{}".toCharArray();
 
         // pide longitud de la contraseña
-        String input = JOptionPane.showInputDialog("Ingrese la longitud de la contraseña (mínimo 4):");
-        int longitud = Integer.parseInt(input);
+        String entrada = JOptionPane.showInputDialog("Ingrese la longitud de la contraseña (mínimo 8):");
+        int longitud = Integer.parseInt(entrada);
 
         if (longitud < 8) {
-            JOptionPane.showMessageDialog(null, "La longitud debe ser mayor o igual a 8");
+            JOptionPane.showMessageDialog(null, "La longitud debe ser mayor o igual a 8", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -49,6 +49,7 @@ public class Main {
         }
 
         // mostrar la contraseña generada
-        JOptionPane.showMessageDialog(null, "Contraseña generada:\n" + new String(contrasena));
+        JOptionPane.showMessageDialog(null, "Contraseña generada:\n"
+                + new String(contrasena), "Exito",JOptionPane.INFORMATION_MESSAGE);
     }
 }
