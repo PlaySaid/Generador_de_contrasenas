@@ -19,6 +19,9 @@ public class Main {
         if (longitud < 8) {
             JOptionPane.showMessageDialog(null, "La longitud debe ser mayor o igual a 8", "Error", JOptionPane.ERROR_MESSAGE);
             return;
+        } else if (longitud > 50) {
+            JOptionPane.showMessageDialog(null, "La longitud debe ser menor o igual a 50", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
         }
 
         // array para guardar la contraseña
