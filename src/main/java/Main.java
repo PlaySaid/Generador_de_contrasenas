@@ -1,58 +1,59 @@
-import javax.swing.*;
-import java.util.Random;
+import java.security.SecureRandom;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("-- Generador de Contraseñas --");
-        Random random = new Random();
 
-        // arreglos de caracteres
-        char[] mayusculas = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
-        char[] minusculas = "abcdefghijklmnopqrstuvwxyz".toCharArray();
-        char[] numeros = "0123456789".toCharArray();
-        char[] simbolos = "!@#$%^&*()_+-=[]{}".toCharArray();
+        SecureRandom random = new SecureRandom();
+        Scanner scanner = new Scanner(System.in);
 
-        // pide longitud de la contraseña
-        String entrada = JOptionPane.showInputDialog("Ingrese la longitud de la contraseña (mínimo 8):");
-        int longitud = Integer.parseInt(entrada);
+        String mayusculas = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        String minusculas = "abcdefghijklmnopqrstuvwxyz";
+        String numeros    = "0123456789";
+        String simbolos   = "!@#$%^&*()-_=+[]{}";
+
+        String caracteres = mayusculas + minusculas + numeros + simbolos;
+
+        System.out.print("Ingrese la longitud de la contraseña: ");
+        int longitud = scanner.nextInt();
+        scanner.close();
 
         if (longitud < 8) {
-            JOptionPane.showMessageDialog(null, "La longitud debe ser mayor o igual a 8", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        } else if (longitud > 50) {
-            JOptionPane.showMessageDialog(null, "La longitud debe ser menor o igual a 50", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println("La longitud debe ser mayor o igual a 8");
             return;
         }
 
-        // array para guardar la contraseña
-        char[] contrasena = new char[longitud];
+        List<Character> caracteresDeContrasena = new ArrayList<>();
 
-        // asegura un caracter de cada tipo
-        contrasena[0] = mayusculas[random.nextInt(mayusculas.length)];
-        contrasena[1] = minusculas[random.nextInt(minusculas.length)];
-        contrasena[2] = numeros[random.nextInt(numeros.length)];
-        contrasena[3] = simbolos[random.nextInt(simbolos.length)];
+        // Se asegura 1 de cada tipo
+        caracteresDeContrasena.add(mayusculas.charAt(random.nextInt(mayusculas.length())));
+        caracteresDeContrasena.add(minusculas.charAt(random.nextInt(minusculas.length())));
+        caracteresDeContrasena.add(numeros.charAt(random.nextInt(numeros.length())));
+        caracteresDeContrasena.add(simbolos.charAt(random.nextInt(simbolos.length())));
 
-        // une todos los arreglos en un solo string
-        String todos = new String(mayusculas) + new String(minusculas)
-                + new String(numeros) + new String(simbolos);
-        char[] caracteres = todos.toCharArray();
+        // Se completa el resto de la contrasena
+        IntStream.range(0, longitud - 4).forEach(
+                i -> caracteresDeContrasena.add(
+                caracteres.charAt(
+                        random.nextInt(
+                                caracteres.length()))));
 
-        // completa el resto de la contraseña
-        for (int i = 4; i < longitud; i++) {
-            contrasena[i] = caracteres[random.nextInt(caracteres.length)];
-        }
 
-        // mezcla los caracteres para que no quede predecible
-        for (int i = 0; i < contrasena.length; i++) {
-            int j = random.nextInt(contrasena.length);
-            char temp = contrasena[i];
-            contrasena[i] = contrasena[j];
-            contrasena[j] = temp;
-        }
+        // se randomiza toda la contrasena
+        Collections.shuffle(caracteresDeContrasena, random);
 
-        // mostrar la contraseña generada
-        JOptionPane.showMessageDialog(null, "Contraseña generada:\n"
-                + new String(contrasena), "Exito",JOptionPane.INFORMATION_MESSAGE);
+        // se unifica al string final
+        String contrasena = caracteresDeContrasena.stream()
+                        .map(String::valueOf)
+                                .collect(Collectors.joining());
+
+        System.out.println("Contraseña generada: " + contrasena);
+
+
     }
 }
