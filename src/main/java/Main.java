@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.util.Arrays;
 import java.util.Random;
 
 public class Main {
@@ -54,5 +55,50 @@ public class Main {
         // mostrar la contraseña generada
         JOptionPane.showMessageDialog(null, "Contraseña generada:\n"
                 + new String(contrasena), "Exito",JOptionPane.INFORMATION_MESSAGE);
+
+
+        // Llamando al metodo ordenamiento burbuja
+        char[] copia1 = contrasena.clone();
+        burbuja(copia1);
+        System.out.println("Contraseña ordenada (manual - burbuja): " + new String(copia1));
+
+        // ORDENAMIENTO NATIVO DE JAVA
+        char[] copia2 = contrasena.clone();
+        Arrays.sort(copia2);
+        System.out.println("Contraseña ordenada (nativa - Arrays.sort): " + new String(copia2));
+
+        // Llamando al metodo busqueda lineal
+        char buscar = '4';
+        int pos1 = busquedaLineal(contrasena, buscar);
+        if (pos1 >= 0) {
+            System.out.println("Búsqueda manual: '" + buscar + "' encontrado en posición " + pos1);
+        } else {
+            System.out.println("Búsqueda manual: '" + buscar + "' no está en la contraseña");
+        }
+
+
+    }
+
+    // ORDENAMIENTO BURBUJA
+    public static void burbuja(char[] arr) {
+        for (int i = 0; i < arr.length - 1; i++) {
+            for (int j = 0; j < arr.length - 1 - i; j++) {
+                if (arr[j] > arr[j + 1]) {
+                    char temp = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = temp;
+                }
+            }
+        }
+    }
+
+    // BUSQUEDA MANUAL LINEAL
+    public static int busquedaLineal(char[] arr, char objetivo) {
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == objetivo) {
+                return i;
+            }
+        }
+        return -1;
     }
 }
