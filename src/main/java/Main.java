@@ -54,6 +54,22 @@ public class Main {
 
         System.out.println("Contraseña generada: " + contrasena);
 
+        // Transforma la contrasena a mayusculas
+        String soloMayusculas = contrasena.chars()
+                .mapToObj(c -> (char) c)
+                .map(Character::toUpperCase)
+                .map(String::valueOf)
+                .collect(Collectors.joining());
+        System.out.println("En mayusculas: " + soloMayusculas);
+
+        // Filtra solamente los digitos que contiene la contrasena
+        String soloDigitos = contrasena.chars()
+                .mapToObj(c -> (char) c)
+                .filter(Character::isDigit)
+                .map(String::valueOf)
+                .collect(Collectors.joining());
+        System.out.println("Solo números: " + soloDigitos);
+
 
     }
 }
