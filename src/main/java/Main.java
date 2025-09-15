@@ -70,6 +70,19 @@ public class Main {
                 .collect(Collectors.joining());
         System.out.println("Solo números: " + soloDigitos);
 
+        // Reduce solamente a los simbolos que tiene la contrasena
+        String soloSimbolos = "!@#$%^&*()-_=+[]{}";
+        long totalSimbolos = contrasena.chars()
+                .mapToObj(c -> (char) c)
+                .filter(ch -> soloSimbolos.indexOf(ch) >= 0)
+                .count();
+        System.out.println("Cantidad de símbolos: " + totalSimbolos);
 
+        // Recolecta los caracteres y los transforma en una list
+        List<Character> lista = contrasena.chars()
+                .mapToObj(c -> (char)c)
+                .collect(Collectors.toList());
+
+        System.out.println("Lista: " + lista);
     }
 }
